@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 #if NET4
 
@@ -143,6 +144,22 @@ namespace IbanValidator
                 if (!char.IsDigit(bban[i]) && !bban[i].IsValidChar())
                     return false;
             return true;
+        }
+
+        private static Regex _parsePattern = new Regex(@"^(?<country>\w{2})(?<checksum>\d{2})(?<bban>\d{1,30})$");
+        public static Iban Parse(string iban)
+        {
+            if (string.IsNullOrEmpty(iban))
+                throw new ArgumentNullException("iban");
+            var m = _parsePattern.Match(iban);
+            if (!m.Success)
+                throw new FormatException("Invalid IBAN");
+
+            var countryCode = m.Groups["country"].Value;
+            var checksum = byte.Parse(m.Groups["checksum"].Value);
+            var bban = m.Groups["rest"].Value;
+
+            return new Iban(countryCode, checksum, bban);
         }
 
         public override string ToString()
