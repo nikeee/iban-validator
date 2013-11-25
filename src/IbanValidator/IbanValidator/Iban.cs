@@ -5,6 +5,12 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
+#if NET4
+
+using System.Numerics;
+
+#endif
+
 namespace IbanValidator
 {
     public class Iban
@@ -65,18 +71,22 @@ namespace IbanValidator
         private bool ValidateNumber()
         {
             const int modValue = 97;
-
-#if !NET4
-            const int maxLength = 9;
             const int checksumLength = 2;
+            const int modResult = 1;
 
             var wholeString = string.Concat(_bban, _countryCode, _checksum.ToString().PadLeft(checksumLength, '0'));
-
+            
             var sb = new StringBuilder();
             for (int i = 0; i < wholeString.Length; ++i)
                 sb.Append(wholeString[i].GetNumericValue());
 
             string valuedString = sb.ToString();
+
+#if !NET4
+            // Little workaround for not having a BigInteger class.
+
+            const int maxLength = 9;
+
             long currentSum = 0;
             while (valuedString.Length > 0)
             {
@@ -99,7 +109,11 @@ namespace IbanValidator
 
                 currentSum = long.Parse(nextString) % modValue;
             }
-            return currentSum % modValue == 1;
+            return currentSum % modValue == modResult;
+#else
+            // Since .NET 4.0 and above have a BigInteger class, we use that.
+            var ibanValue = BigInteger.Parse(valuedString);
+            return ibanValue % modValue == modResult;
 #endif
         }
 
