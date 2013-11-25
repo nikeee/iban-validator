@@ -23,6 +23,9 @@ namespace IbanValidator
     {
         private readonly Bankleitzahl _blz;
         public Bankleitzahl Bankleitzahl { get { return _blz; } }
+
+        private readonly Kontonummer _kto;
+        public Kontonummer Kontonummer { get { return _kto; } }
         public GermanyIbanInformationProvider(Iban iban)
             : base(iban)
         {
@@ -30,21 +33,38 @@ namespace IbanValidator
         }
     }
 
+    public class Kontonummer
+    {
+        public long Value { get; private set; }
+        public Kontonummer(long kto)
+        {
+            if (kto > 999999999 || kto < 10000000)
+                throw new ArgumentException("Invalid kto");
+            Value = kto;
+        }
+
+        public static Kontonummer Parse(string kto)
+        {
+            return new Kontonummer(long.Parse(kto));
+        }
+    }
+
     public class Bankleitzahl
     {
         public short ClearingArea { get; private set; }
         public Bankengruppe Bankengruppe {get; private set;}
+        public short IndividualNumber { get; private set; }
 
         public Bankleitzahl(long blz)
         {
             ClearingArea = (short)(blz / 100000);
             Bankengruppe = (Bankengruppe)(blz / 10000 % 10);
+            IndividualNumber = (short)(blz % 1000);
         }
 
         public static Bankleitzahl Parse(string blz)
         {
-            var blzLong = long.Parse(blz);
-            return new Bankleitzahl(blzLong);
+            return new Bankleitzahl(long.Parse(blz));
         }
     }
 
