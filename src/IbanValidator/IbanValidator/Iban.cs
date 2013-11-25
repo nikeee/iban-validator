@@ -29,18 +29,21 @@ namespace IbanValidator
         {
             get
             {
-                return _isValid;
+                if (!_isValid)
+                    return false;
+                return _bbanValidator == null ? true : _bbanValidator.Validate(_bban);
             }
         }
 
-#if false
-        public Iban(string countryCode, byte checksum, Bban bban)
-        {
+        protected readonly BbanValidator _bbanValidator;
+        public BbanValidator BbanValidator { get { return _bbanValidator; } }
 
-        }
-#endif
 
         public Iban(string countryCode, byte checksum, string bban)
+            : this(countryCode, checksum, bban, null)
+        { }
+
+        public Iban(string countryCode, byte checksum, string bban, BbanValidator bbanValidator)
         {
             if (string.IsNullOrEmpty(countryCode))
                 throw new ArgumentNullException("countryCode");
@@ -66,6 +69,8 @@ namespace IbanValidator
             _bban = bban;
 
             _isValid = ValidateNumber();
+
+            _bbanValidator = bbanValidator;
         }
 
         private bool ValidateNumber()
