@@ -10,6 +10,7 @@ namespace IbanValidator
     {
         public string CountryCode { get; private set; }
         public byte Checksum { get; private set; }
+        public string Bban { get; private set; }
 
         public Iban(string countryCode, byte checksum, string bban)
         {
@@ -28,9 +29,11 @@ namespace IbanValidator
 
             if (string.IsNullOrEmpty(bban))
                 throw new ArgumentNullException("bban");
+            
             bban = bban.ToUpperInvariant();
-
-
+            if (!ValidateBban(bban))
+                throw new ArgumentException("Invalid bban.");
+            Bban = bban;
         }
 
 
