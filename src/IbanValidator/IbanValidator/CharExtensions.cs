@@ -14,7 +14,7 @@ namespace IbanValidator
 
         public static int GetNumericValue(this char c)
         {
-            return c >= 'A' && c <= 'Z';
+            return (int)c - 55;
         }
     }
 }

@@ -38,6 +38,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharExtensions.cs" />
     <Compile Include="Iban.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

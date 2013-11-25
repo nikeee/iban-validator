@@ -50,11 +50,8 @@ namespace IbanValidator
             if (bban.Length <= MaxBbanLength)
                 return false;
             for (int i = 0; i < bban.Length; ++i)
-            {
-                if (!char.IsDigit(bban[i]) && !char.IsXyz(bban[i]))
+                if (!char.IsDigit(bban[i]) && !bban[i].IsValidChar())
                     return false;
-            }
-
             return true;
         }
     }
