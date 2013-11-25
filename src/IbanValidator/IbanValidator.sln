@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator", "IbanValidator\IbanValidator.csproj", "{02DF9AF0-664A-4A94-8B92-6E5151886163}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator.Tests", "IbanValidator.Tests\IbanValidator.Tests.csproj", "{4EEB1568-2B9D-4406-9F13-13B15F3AB063}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{02DF9AF0-664A-4A94-8B92-6E5151886163}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02DF9AF0-664A-4A94-8B92-6E5151886163}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02DF9AF0-664A-4A94-8B92-6E5151886163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EEB1568-2B9D-4406-9F13-13B15F3AB063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EEB1568-2B9D-4406-9F13-13B15F3AB063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EEB1568-2B9D-4406-9F13-13B15F3AB063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EEB1568-2B9D-4406-9F13-13B15F3AB063}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

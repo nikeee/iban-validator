@@ -59,6 +59,7 @@ namespace IbanValidator
             const int maxLength = 9;
             const int checksumLength = 2;
 
+#if !NET4
             var wholeString = string.Concat(_bban, _countryCode, _checksum.ToString().PadLeft(checksumLength, '0'));
 
             var sb = new StringBuilder();
@@ -84,6 +85,7 @@ namespace IbanValidator
             }
 
             return currentSum % modValue == 1;
+#endif
         }
 
 
