@@ -6,6 +6,8 @@ namespace IbanValidator.Tests
     [TestClass]
     public class IbanTests
     {
+        #region Contructor
+
         [TestMethod]
         public void Constructor1()
         {
@@ -32,6 +34,9 @@ namespace IbanValidator.Tests
             Assert.AreEqual(68, iban.Checksum);
             Assert.AreEqual("210501700012345678", iban.Bban);
         }
+
+        #endregion
+        #region IsValid
 
         [TestMethod]
         public void IsValid1()
@@ -95,5 +100,38 @@ namespace IbanValidator.Tests
             var iban = new Iban("de", 88, "2008 0000 0970 3757 10");
             Assert.IsFalse(iban.IsValid);
         }
+
+        #endregion
+        #region ToString
+
+        [TestMethod]
+        public void ToString1()
+        {
+            var iban = new Iban("de", 68, "210501700012345678");
+            Assert.AreEqual("DE68 2105 0170 0012 3456 78", iban.ToString());
+        }
+
+        [TestMethod]
+        public void ToString2()
+        {
+            var iban = new Iban("de", 68, "210501700012345678");
+            Assert.AreEqual("DE68 2105 0170 0012 3456 78", iban.ToString());
+        }
+
+        [TestMethod]
+        public void ToString3()
+        {
+            var iban = new Iban("de", 88, "2008 0000 0970 3757 10");
+            Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
+        }
+        
+        [TestMethod]
+        public void ToString4()
+        {
+            var iban = new Iban("de", 88, "200800000970375710");
+            Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
+        }
+
+        #endregion
     }
 }
