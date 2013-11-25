@@ -74,14 +74,14 @@ namespace IbanValidator
             _bbanValidator = bbanValidator;
         }
 
+        private const int ChecksumLength = 2;
         private bool ValidateNumber()
         {
             const int modValue = 97;
-            const int checksumLength = 2;
             const int modResult = 1;
 
-            var wholeString = string.Concat(_bban, _countryCode, _checksum.ToString().PadLeft(checksumLength, '0'));
-            
+            var wholeString = string.Concat(_bban, _countryCode, _checksum.ToString().PadLeft(ChecksumLength, '0'));
+
             var sb = new StringBuilder();
             for (int i = 0; i < wholeString.Length; ++i)
                 sb.Append(wholeString[i].GetNumericValue());
@@ -143,6 +143,21 @@ namespace IbanValidator
                 if (!char.IsDigit(bban[i]) && !bban[i].IsValidChar())
                     return false;
             return true;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder(34);
+            sb.Append(CountryCode);
+            sb.Append(Checksum.ToString().PadLeft(ChecksumLength, '0'));
+
+            for (int i = 0; i < _bban.Length; ++i)
+            {
+                if (i % 4 == 0)
+                    sb.Append(' ');
+                sb.Append(_bban[i]);
+            }
+            return sb.ToString();
         }
     }
 }
