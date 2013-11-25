@@ -14,7 +14,9 @@ namespace IbanValidator
 
         public static int GetNumericValue(this char c)
         {
-            return (int)c - 55;
+            if (c.IsValidChar())
+                return (int)c - 55;
+            return int.Parse(c.ToString());
         }
     }
 }
