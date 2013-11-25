@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -57,10 +58,11 @@ namespace IbanValidator
         private bool ValidateNumber()
         {
             const int modValue = 97;
+
+#if !NET4
             const int maxLength = 9;
             const int checksumLength = 2;
 
-#if !NET4
             var wholeString = string.Concat(_bban, _countryCode, _checksum.ToString().PadLeft(checksumLength, '0'));
 
             var sb = new StringBuilder();
@@ -69,22 +71,27 @@ namespace IbanValidator
 
             string valuedString = sb.ToString();
             long currentSum = 0;
-            for (int i = 0; i < valuedString.Length; i += maxLength)
+            while (valuedString.Length > 0)
             {
-                int subStrLength = Math.Min(i + 9, valuedString.Length - i);
-                string substr = valuedString.Substring(i, subStrLength);
 
-                if (substr.Length < maxLength)
+                string nextString;
+                int subStrLength;
+                if (currentSum > 0)
                 {
-                    int charsToAdd = maxLength - substr.Length;
-                    string prefix = currentSum.ToString().PadLeft(charsToAdd, '0');
-                    substr = prefix + substr;
+                    var sumStr = currentSum.ToString();
+                    subStrLength = maxLength - sumStr.Length;
+                    subStrLength = Math.Min(subStrLength, valuedString.Length);
+                    nextString = sumStr + valuedString.Substring(0, subStrLength);
                 }
+                else
+                {
+                    subStrLength = Math.Min(maxLength, valuedString.Length);
+                    nextString = valuedString.Substring(0, subStrLength);
+                }
+                valuedString = valuedString.Remove(0, subStrLength);
 
-                var currentValue = long.Parse(substr);
-                currentSum = currentValue % modValue;
+                currentSum = long.Parse(nextString) % modValue;
             }
-
             return currentSum % modValue == 1;
 #endif
         }
