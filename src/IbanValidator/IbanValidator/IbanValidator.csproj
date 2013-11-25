@@ -38,11 +38,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bban.cs" />
+    <Compile Include="BbanValidator.cs" />
     <Compile Include="CharExtensions.cs" />
     <Compile Include="Iban.cs" />
+    <Compile Include="IbanInformationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Specialized\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
