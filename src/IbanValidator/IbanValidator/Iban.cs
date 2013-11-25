@@ -27,6 +27,13 @@ namespace IbanValidator
             }
         }
 
+#if false
+        public Iban(string countryCode, byte checksum, Bban bban)
+        {
+
+        }
+#endif
+
         public Iban(string countryCode, byte checksum, string bban)
         {
             if (string.IsNullOrEmpty(countryCode))
