@@ -44,6 +44,7 @@ namespace IbanValidator
             if (string.IsNullOrEmpty(bban))
                 throw new ArgumentNullException("bban");
 
+            bban = bban.StripWhiteSpace();
             bban = bban.ToUpperInvariant();
             if (!ValidateBban(bban))
                 throw new ArgumentException("Invalid bban.");
@@ -102,7 +103,7 @@ namespace IbanValidator
         private static bool ValidateBban(string bban)
         {
             bban = bban.Trim();
-            if (bban.Length <= MaxBbanLength)
+            if (bban.Length > MaxBbanLength)
                 return false;
             for (int i = 0; i < bban.Length; ++i)
                 if (!char.IsDigit(bban[i]) && !bban[i].IsValidChar())
