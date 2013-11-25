@@ -133,5 +133,29 @@ namespace IbanValidator.Tests
         }
 
         #endregion
+#region Parse
+
+        [TestMethod]
+        public void Parse1()
+        {
+            var iban = Iban.Parse("DE88 2008 0000 0970 3757 10");
+            Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
+        }
+
+        [TestMethod]
+        public void Parse2()
+        {
+            var iban = Iban.Parse("DE88200800000970375710");
+            Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
+        }
+
+        [TestMethod]
+        public void Parse3()
+        {
+            var iban = Iban.Parse("D E882 008000 009703 75710");
+            Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
+        }
+
+#endregion
     }
 }

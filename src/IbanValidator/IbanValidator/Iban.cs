@@ -151,13 +151,15 @@ namespace IbanValidator
         {
             if (string.IsNullOrEmpty(iban))
                 throw new ArgumentNullException("iban");
+
+            iban = iban.StripWhiteSpace();
             var m = _parsePattern.Match(iban);
             if (!m.Success)
                 throw new FormatException("Invalid IBAN");
 
             var countryCode = m.Groups["country"].Value;
             var checksum = byte.Parse(m.Groups["checksum"].Value);
-            var bban = m.Groups["rest"].Value;
+            var bban = m.Groups["bban"].Value;
 
             return new Iban(countryCode, checksum, bban);
         }
