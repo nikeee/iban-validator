@@ -146,7 +146,7 @@ namespace IbanValidator
             return true;
         }
 
-        private static Regex _parsePattern = new Regex(@"^(?<country>\w{2})(?<checksum>\d{2})(?<bban>\d{1,30})$");
+        private static Regex _parsePattern = new Regex(@"^(?<country>[a-zA-Z]{2})(?<checksum>\d{2})(?<bban>[a-zA-Z\d]{1,30})$");
         public static Iban Parse(string iban)
         {
             if (string.IsNullOrEmpty(iban))
