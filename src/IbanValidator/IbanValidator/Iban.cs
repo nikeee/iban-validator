@@ -40,7 +40,6 @@ namespace IbanValidator
         protected readonly BbanValidator _bbanValidator;
         public BbanValidator BbanValidator { get { return _bbanValidator; } }
 
-
         public Iban(string countryCode, byte checksum, string bban)
             : this(countryCode, checksum, bban, null)
         { }
@@ -189,8 +188,7 @@ namespace IbanValidator
             if (string.IsNullOrEmpty(bban) || bban.Length > MaxBbanLength)
                 return false;
 
-            result = new Iban(countryCode, checksum, bban);
-            return true;
+            return (result = new Iban(countryCode, checksum, bban)) != null;
         }
 
         #region Equality
