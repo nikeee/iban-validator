@@ -9,7 +9,7 @@ namespace IbanValidator.Tests
         #region Contructor
 
         [TestMethod]
-        public void IbanTest1()
+        public void IbanTest()
         {
             var iban = new Iban("DE", 68, "210501700012345678");
             Assert.AreEqual("DE", iban.CountryCode);
@@ -18,7 +18,7 @@ namespace IbanValidator.Tests
         }
 
         [TestMethod]
-        public void IbanTest2()
+        public void IbanTest1()
         {
             var iban = new Iban("DE", 68, "2105 0170 0012 3456 78");
             Assert.AreEqual("DE", iban.CountryCode);
@@ -27,7 +27,7 @@ namespace IbanValidator.Tests
         }
 
         [TestMethod]
-        public void IbanTest3()
+        public void IbanTest2()
         {
             var iban = new Iban("de", 68, "2105 0170 0012 3456 78");
             Assert.AreEqual("DE", iban.CountryCode);
@@ -39,63 +39,63 @@ namespace IbanValidator.Tests
         #region IsValid
 
         [TestMethod]
-        public void IsValid1()
+        public void IsValid()
         {
             var iban = new Iban("DE", 68, "210501700012345678");
             Assert.IsTrue(iban.IsValid);
         }
 
         [TestMethod]
-        public void IsValid2()
+        public void IsValid1()
         {
             var iban = new Iban("DE", 68, "2105 0170 0012 3456 78");
             Assert.IsTrue(iban.IsValid);
         }
 
         [TestMethod]
-        public void IsValid3()
+        public void IsValid2()
         {
             var iban = new Iban("de", 68, "2105 0170 0012 3456 78");
             Assert.IsTrue(iban.IsValid);
         }
 
         [TestMethod]
-        public void IsValid4()
+        public void IsValid3()
         {
             var iban = new Iban("DE", 88, "200800000970375700");
             Assert.IsTrue(iban.IsValid);
         }
 
         [TestMethod]
-        public void IsValid5()
+        public void IsValid4()
         {
             var iban = new Iban("DE", 88, "2008 0000 0970 3757 00");
             Assert.IsTrue(iban.IsValid);
         }
 
         [TestMethod]
-        public void IsValid6()
+        public void IsValid5()
         {
             var iban = new Iban("de", 88, "2008 0000 0970 3757 00");
             Assert.IsTrue(iban.IsValid);
         }
 
         [TestMethod]
-        public void IsValid7()
+        public void IsValid6()
         {
             var iban = new Iban("DE", 88, "200800000970375710");
             Assert.IsFalse(iban.IsValid);
         }
 
         [TestMethod]
-        public void IsValid8()
+        public void IsValid7()
         {
             var iban = new Iban("DE", 88, "2008 0000 0970 3757 10");
             Assert.IsFalse(iban.IsValid);
         }
 
         [TestMethod]
-        public void IsValid9()
+        public void IsValid8()
         {
             var iban = new Iban("de", 88, "2008 0000 0970 3757 10");
             Assert.IsFalse(iban.IsValid);
@@ -103,6 +103,13 @@ namespace IbanValidator.Tests
 
         #endregion
         #region ToString
+
+        [TestMethod]
+        public void ToString()
+        {
+            var iban = new Iban("de", 68, "210501700012345678");
+            Assert.AreEqual("DE68 2105 0170 0012 3456 78", iban.ToString());
+        }
 
         [TestMethod]
         public void ToString1()
@@ -114,19 +121,12 @@ namespace IbanValidator.Tests
         [TestMethod]
         public void ToString2()
         {
-            var iban = new Iban("de", 68, "210501700012345678");
-            Assert.AreEqual("DE68 2105 0170 0012 3456 78", iban.ToString());
-        }
-
-        [TestMethod]
-        public void ToString3()
-        {
             var iban = new Iban("de", 88, "2008 0000 0970 3757 10");
             Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
         }
 
         [TestMethod]
-        public void ToString4()
+        public void ToString3()
         {
             var iban = new Iban("de", 88, "200800000970375710");
             Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
@@ -136,21 +136,21 @@ namespace IbanValidator.Tests
         #region Parse
 
         [TestMethod]
-        public void Parse1()
+        public void Parse()
         {
             var iban = Iban.Parse("DE88 2008 0000 0970 3757 10");
             Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
         }
 
         [TestMethod]
-        public void Parse2()
+        public void Parse1()
         {
             var iban = Iban.Parse("DE88200800000970375710");
             Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
         }
 
         [TestMethod]
-        public void Parse3()
+        public void Parse2()
         {
             var iban = Iban.Parse("D E882 008000 009703 75710");
             Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());

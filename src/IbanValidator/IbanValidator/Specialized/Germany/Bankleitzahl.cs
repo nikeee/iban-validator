@@ -11,8 +11,11 @@ namespace IbanValidator.Specialized.Germany
         public Bankengruppe Bankengruppe { get; private set; }
         public short IndividualNumber { get; private set; }
 
+        public long Value { get; private set; }
+
         public Bankleitzahl(long blz)
         {
+            Value = blz;
             ClearingArea = (short)(blz / 100000);
             Bankengruppe = (Bankengruppe)(blz / 10000 % 10);
             IndividualNumber = (short)(blz % 1000);

@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="IbanTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Specialized\Germany\BankleitzahlTests.cs" />
     <Compile Include="Specialized\Germany\KontonummerTests.cs" />
   </ItemGroup>
   <ItemGroup>
