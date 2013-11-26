@@ -164,6 +164,45 @@ namespace IbanValidator
             return new Iban(countryCode, checksum, bban);
         }
 
+        #region Equality
+        
+        public static bool operator ==(Iban a, Iban b)
+        {
+            if (object.ReferenceEquals(a, b))
+                return true;
+
+            if (((object)a == null) || ((object)b == null))
+                return false;
+
+            return a._checksum == b._checksum && a._countryCode == b._countryCode && a._bban == b._bban;
+        }
+        public static bool operator !=(Iban a, Iban b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return _countryCode.GetHashCode() ^ _checksum ^ _bban.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            Iban iban = obj as Iban;
+            if ((object)iban == null)
+                return false;
+            return base.Equals(obj) && this == iban;
+        }
+
+        public bool Equals(Iban iban)
+        {
+            if ((object)iban == null)
+                return false;
+            return this == iban;
+        }
+
+        #endregion
+
         public override string ToString()
         {
             var sb = new StringBuilder(34);

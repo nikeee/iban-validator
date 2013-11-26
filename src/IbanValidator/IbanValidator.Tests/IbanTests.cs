@@ -105,13 +105,6 @@ namespace IbanValidator.Tests
         #region ToString
 
         [TestMethod]
-        public void ToString()
-        {
-            var iban = new Iban("de", 68, "210501700012345678");
-            Assert.AreEqual("DE68 2105 0170 0012 3456 78", iban.ToString());
-        }
-
-        [TestMethod]
         public void ToString1()
         {
             var iban = new Iban("de", 68, "210501700012345678");
@@ -121,12 +114,19 @@ namespace IbanValidator.Tests
         [TestMethod]
         public void ToString2()
         {
+            var iban = new Iban("de", 68, "210501700012345678");
+            Assert.AreEqual("DE68 2105 0170 0012 3456 78", iban.ToString());
+        }
+
+        [TestMethod]
+        public void ToString3()
+        {
             var iban = new Iban("de", 88, "2008 0000 0970 3757 10");
             Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
         }
 
         [TestMethod]
-        public void ToString3()
+        public void ToString4()
         {
             var iban = new Iban("de", 88, "200800000970375710");
             Assert.AreEqual("DE88 2008 0000 0970 3757 10", iban.ToString());
