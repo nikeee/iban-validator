@@ -89,21 +89,10 @@ TestResults/
 ehthumbs.db
 Thumbs.db
 
-
-node_modules
-# only typescript files!
-*.js
-
-!publish.js
-
-!publish/Greasemonkey/VBPC/amalgamation.user.js
-!publish/Greasemonkey/VBPC/manifest.js
-
-!publish/Chrome/VBPC/amalgamation.user.js
-!publish/Chrome/VBPC/manifest.json
-
-
 *.sublime-project
 *.sublime-workspace
+
+!build/3.5/*.dll
+!build/4.0/*.dll
 
 .gitattributes
