@@ -164,18 +164,46 @@ namespace IbanValidator
             return new Iban(countryCode, checksum, bban);
         }
 
+        public static bool TryParse(string iban, out Iban result)
+        {
+            result = null;
+            if (string.IsNullOrEmpty(iban))
+                return false;
+
+            iban = iban.StripWhiteSpace();
+            var m = _parsePattern.Match(iban);
+            if (!m.Success)
+                return false;
+
+            var countryCode = m.Groups["country"].Value;
+            if (string.IsNullOrEmpty(countryCode) || countryCode.Length != 2)
+                return false;
+
+            byte checksum;
+            if (!byte.TryParse(m.Groups["checksum"].Value, out checksum))
+                return false;
+            if (checksum > 99)
+                return false;
+
+            var bban = m.Groups["bban"].Value;
+            if (string.IsNullOrEmpty(bban) || bban.Length > MaxBbanLength)
+                return false;
+
+            result = new Iban(countryCode, checksum, bban);
+            return true;
+        }
+
         #region Equality
         
         public static bool operator ==(Iban a, Iban b)
         {
             if (object.ReferenceEquals(a, b))
                 return true;
-
             if (((object)a == null) || ((object)b == null))
                 return false;
-
             return a._checksum == b._checksum && a._countryCode == b._countryCode && a._bban == b._bban;
         }
+
         public static bool operator !=(Iban a, Iban b)
         {
             return !(a == b);
