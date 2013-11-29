@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -61,8 +57,11 @@ namespace IbanValidator
 
             if (string.IsNullOrEmpty(bban))
                 throw new ArgumentNullException("bban");
-
+#if NET20
+            bban = StringExtensions.StripWhiteSpace(bban);
+#else
             bban = bban.StripWhiteSpace();
+#endif
             bban = bban.ToUpperInvariant();
             if (!ValidateBban(bban))
                 throw new ArgumentException("Invalid bban.");
@@ -83,8 +82,13 @@ namespace IbanValidator
             var wholeString = string.Concat(_bban, _countryCode, _checksum.ToString().PadLeft(ChecksumLength, '0'));
 
             var sb = new StringBuilder();
+#if NET20
+            for (int i = 0; i < wholeString.Length; ++i)
+                sb.Append(CharExtensions.GetNumericValue(wholeString[i]));
+#else
             for (int i = 0; i < wholeString.Length; ++i)
                 sb.Append(wholeString[i].GetNumericValue());
+#endif
 
             string valuedString = sb.ToString();
 
@@ -140,8 +144,15 @@ namespace IbanValidator
             if (bban.Length > MaxBbanLength)
                 return false;
             for (int i = 0; i < bban.Length; ++i)
+            {
+#if NET20
+                if (!char.IsDigit(bban[i]) && !CharExtensions.IsValidChar(bban[i]))
+                    return false;
+#else
                 if (!char.IsDigit(bban[i]) && !bban[i].IsValidChar())
                     return false;
+#endif
+            }
             return true;
         }
 
@@ -150,8 +161,11 @@ namespace IbanValidator
         {
             if (string.IsNullOrEmpty(iban))
                 throw new ArgumentNullException("iban");
-
+#if NET20
+            iban = StringExtensions.StripWhiteSpace(iban);
+#else
             iban = iban.StripWhiteSpace();
+#endif
             var m = _parsePattern.Match(iban);
             if (!m.Success)
                 throw new FormatException("Invalid IBAN");
@@ -169,7 +183,11 @@ namespace IbanValidator
             if (string.IsNullOrEmpty(iban))
                 return false;
 
+#if NET20
+            iban = StringExtensions.StripWhiteSpace(iban);
+#else
             iban = iban.StripWhiteSpace();
+#endif
             var m = _parsePattern.Match(iban);
             if (!m.Success)
                 return false;
