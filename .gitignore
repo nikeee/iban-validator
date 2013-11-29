@@ -96,6 +96,7 @@ Thumbs.db
 !build/3.5/*.dll
 !build/4.0/*.dll
 !build/4.5/*.dll
+!build/4.5.1/*.dll
 
 *.sln.DotSettings.user
 .gitattributes
