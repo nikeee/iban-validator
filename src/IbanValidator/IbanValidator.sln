@@ -3,16 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator", "IbanValidator\IbanValidator.csproj", "{02DF9AF0-664A-4A94-8B92-6E5151886163}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator (3.5)", "IbanValidator\IbanValidator (3.5).csproj", "{02DF9AF0-664A-4A94-8B92-6E5151886163}"
 	ProjectSection(ProjectDependencies) = postProject
 		{249CE0D0-0653-461F-8079-1B3EA7E7DC4B} = {249CE0D0-0653-461F-8079-1B3EA7E7DC4B}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator.Tests", "IbanValidator.Tests\IbanValidator.Tests.csproj", "{4EEB1568-2B9D-4406-9F13-13B15F3AB063}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FD6EA84A-CB75-423E-8213-BC5FA3493BA8} = {FD6EA84A-CB75-423E-8213-BC5FA3493BA8}
-		{249CE0D0-0653-461F-8079-1B3EA7E7DC4B} = {249CE0D0-0653-461F-8079-1B3EA7E7DC4B}
-		{0DCB72E8-801D-48E9-AFE4-B2693A374172} = {0DCB72E8-801D-48E9-AFE4-B2693A374172}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator (4.0)", "IbanValidator\IbanValidator (4.0).csproj", "{0DCB72E8-801D-48E9-AFE4-B2693A374172}"
@@ -24,6 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator (2.0)", "Iban
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator (4.5)", "IbanValidator\IbanValidator (4.5).csproj", "{FD6EA84A-CB75-423E-8213-BC5FA3493BA8}"
 	ProjectSection(ProjectDependencies) = postProject
+		{0DCB72E8-801D-48E9-AFE4-B2693A374172} = {0DCB72E8-801D-48E9-AFE4-B2693A374172}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator.Tests", "IbanValidator.Tests\IbanValidator.Tests.csproj", "{4EEB1568-2B9D-4406-9F13-13B15F3AB063}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD6EA84A-CB75-423E-8213-BC5FA3493BA8} = {FD6EA84A-CB75-423E-8213-BC5FA3493BA8}
+		{249CE0D0-0653-461F-8079-1B3EA7E7DC4B} = {249CE0D0-0653-461F-8079-1B3EA7E7DC4B}
 		{0DCB72E8-801D-48E9-AFE4-B2693A374172} = {0DCB72E8-801D-48E9-AFE4-B2693A374172}
 	EndProjectSection
 EndProject

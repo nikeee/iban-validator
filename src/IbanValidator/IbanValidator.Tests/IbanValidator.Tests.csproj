@@ -59,7 +59,7 @@
     <Compile Include="Specialized\Germany\KontonummerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\IbanValidator\IbanValidator.csproj">
+    <ProjectReference Include="..\IbanValidator\IbanValidator %283.5%29.csproj">
       <Project>{02df9af0-664a-4a94-8b92-6e5151886163}</Project>
       <Name>IbanValidator</Name>
     </ProjectReference>
