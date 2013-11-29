@@ -92,7 +92,9 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 
+!build/2.0/*.dll
 !build/3.5/*.dll
 !build/4.0/*.dll
+!build/4.5/*.dll
 
 .gitattributes
