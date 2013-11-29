@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
-#if NET4
+#if NET40
 
 using System.Numerics;
 
@@ -94,7 +94,7 @@ namespace IbanValidator
 
             string valuedString = sb.ToString();
 
-#if !NET4
+#if !NET40
             // Little workaround for not having a BigInteger class.
 
             const int maxLength = 9;

@@ -1,5 +1,10 @@
-﻿
-using System.Globalization;
+﻿using System.Globalization;
+
+#if NET45
+
+using System.Runtime.CompilerServices;
+
+#endif
 
 namespace IbanValidator
 {
@@ -8,6 +13,9 @@ namespace IbanValidator
 #if NET20
         public static bool IsValidChar(char c)
 #else
+#if NET45
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static bool IsValidChar(this char c)
 #endif
         {
@@ -17,6 +25,9 @@ namespace IbanValidator
 #if NET20
         public static int GetNumericValue(char c)
 #else
+#if NET45
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static int GetNumericValue(this char c)
 #endif
         {
