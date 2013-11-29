@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -81,7 +82,7 @@ namespace IbanValidator
             const int modValue = 97;
             const int modResult = 1;
 
-            var wholeString = string.Concat(_bban, _countryCode, _checksum.ToString().PadLeft(ChecksumLength, '0'));
+            var wholeString = string.Concat(_bban, _countryCode, _checksum.ToString(CultureInfo.InvariantCulture).PadLeft(ChecksumLength, '0'));
 
             var sb = new StringBuilder();
             for (int i = 0; i < wholeString.Length; ++i)
@@ -106,7 +107,7 @@ namespace IbanValidator
                 int subStrLength;
                 if (currentSum > 0)
                 {
-                    var sumStr = currentSum.ToString();
+                    var sumStr = currentSum.ToString(CultureInfo.InvariantCulture);
                     subStrLength = maxLength - sumStr.Length;
                     subStrLength = Math.Min(subStrLength, valuedString.Length);
                     nextString = sumStr + valuedString.Substring(0, subStrLength);
@@ -157,7 +158,7 @@ namespace IbanValidator
             return true;
         }
 
-        private static readonly Regex _parsePattern = new Regex(@"^(?<country>[a-zA-Z]{2})(?<checksum>\d{2})(?<bban>[a-zA-Z\d]{1,30})$");
+        private static readonly Regex ParsePattern = new Regex(@"^(?<country>[a-zA-Z]{2})(?<checksum>\d{2})(?<bban>[a-zA-Z\d]{1,30})$");
         public static Iban Parse(string iban)
         {
             if (string.IsNullOrEmpty(iban))
@@ -167,7 +168,7 @@ namespace IbanValidator
 #else
             iban = iban.StripWhiteSpace();
 #endif
-            var m = _parsePattern.Match(iban);
+            var m = ParsePattern.Match(iban);
             if (!m.Success)
                 throw new FormatException("Invalid IBAN");
 
@@ -189,7 +190,7 @@ namespace IbanValidator
 #else
             iban = iban.StripWhiteSpace();
 #endif
-            var m = _parsePattern.Match(iban);
+            var m = ParsePattern.Match(iban);
             if (!m.Success)
                 return false;
 
@@ -207,14 +208,15 @@ namespace IbanValidator
             if (string.IsNullOrEmpty(bban) || bban.Length > MaxBbanLength)
                 return false;
 
-            return (result = new Iban(countryCode, checksum, bban)) != null;
+            result = new Iban(countryCode, checksum, bban);
+            return true;
         }
 
         #region Equality
         
         public static bool operator ==(Iban a, Iban b)
         {
-            if (object.ReferenceEquals(a, b))
+            if (ReferenceEquals(a, b))
                 return true;
             if (((object)a == null) || ((object)b == null))
                 return false;
@@ -233,7 +235,7 @@ namespace IbanValidator
 
         public override bool Equals(object obj)
         {
-            Iban iban = obj as Iban;
+            var iban = obj as Iban;
             if ((object)iban == null)
                 return false;
             return base.Equals(obj) && this == iban;
@@ -252,7 +254,7 @@ namespace IbanValidator
         {
             var sb = new StringBuilder(34);
             sb.Append(CountryCode);
-            sb.Append(Checksum.ToString().PadLeft(ChecksumLength, '0'));
+            sb.Append(Checksum.ToString(CultureInfo.InvariantCulture).PadLeft(ChecksumLength, '0'));
 
             for (int i = 0; i < _bban.Length; ++i)
             {

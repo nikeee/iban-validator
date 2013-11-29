@@ -5,14 +5,14 @@ namespace IbanValidator
     public abstract class IbanInformationProvider
     {
 
-        protected readonly Iban _iban;
-        public Iban Iban { get { return _iban; } }
+        protected readonly Iban IbanInteral;
+        public Iban Iban { get { return IbanInteral; } }
 
-        public IbanInformationProvider(Iban iban)
+        protected IbanInformationProvider(Iban iban)
         {
             if (iban == null)
                 throw new ArgumentNullException("iban");
-            _iban = iban;
+            IbanInteral = iban;
         }
     }
 }

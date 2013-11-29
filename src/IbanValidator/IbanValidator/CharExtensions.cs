@@ -1,4 +1,6 @@
 ﻿
+using System.Globalization;
+
 namespace IbanValidator
 {
     internal static class CharExtensions
@@ -19,8 +21,8 @@ namespace IbanValidator
 #endif
         {
             if (IsValidChar(c))
-                return (int)c - 55;
-            return int.Parse(c.ToString());
+                return c - 55;
+            return int.Parse(c.ToString(CultureInfo.InvariantCulture));
         }
     }
 }
