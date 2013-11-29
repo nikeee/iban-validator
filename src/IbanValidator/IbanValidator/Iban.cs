@@ -12,13 +12,13 @@ namespace IbanValidator
 {
     public class Iban
     {
-        protected readonly string _countryCode;
+        private readonly string _countryCode;
         public string CountryCode { get { return _countryCode; } }
 
-        protected readonly byte _checksum;
+        private readonly byte _checksum;
         public byte Checksum { get { return _checksum; } }
 
-        protected readonly string _bban;
+        private readonly string _bban;
         public string Bban { get { return _bban; } }
 
         private readonly bool _isValid;
@@ -33,7 +33,7 @@ namespace IbanValidator
             }
         }
 
-        protected readonly BbanValidator _bbanValidator;
+        private readonly BbanValidator _bbanValidator;
         public BbanValidator BbanValidator { get { return _bbanValidator; } }
 
         public Iban(string countryCode, byte checksum, string bban)
@@ -68,7 +68,9 @@ namespace IbanValidator
 
             _bban = bban;
 
-            _isValid = ValidateNumber();
+            _isValid = ValidateCountrySpecific();
+            if(_isValid)
+                _isValid = ValidateNumber();
 
             _bbanValidator = bbanValidator;
         }
@@ -82,11 +84,10 @@ namespace IbanValidator
             var wholeString = string.Concat(_bban, _countryCode, _checksum.ToString().PadLeft(ChecksumLength, '0'));
 
             var sb = new StringBuilder();
-#if NET20
             for (int i = 0; i < wholeString.Length; ++i)
+#if NET20
                 sb.Append(CharExtensions.GetNumericValue(wholeString[i]));
 #else
-            for (int i = 0; i < wholeString.Length; ++i)
                 sb.Append(wholeString[i].GetNumericValue());
 #endif
 
@@ -127,14 +128,15 @@ namespace IbanValidator
 #endif
         }
 
+        private bool ValidateCountrySpecific()
+        {
+            return CountryValidation.IsValidRest(_countryCode, _bban);
+        }
 
         private static bool ValidateCountryCode(string countryCode)
         {
             countryCode = countryCode.Trim();
-            if (countryCode.Length != 2)
-                return false;
-            // TODO: Check against table
-            return true;
+            return countryCode.Length == 2 && CountryValidation.IsValidCountryCode(countryCode);
         }
 
         private const int MaxBbanLength = 30;
@@ -147,16 +149,15 @@ namespace IbanValidator
             {
 #if NET20
                 if (!char.IsDigit(bban[i]) && !CharExtensions.IsValidChar(bban[i]))
-                    return false;
 #else
                 if (!char.IsDigit(bban[i]) && !bban[i].IsValidChar())
-                    return false;
 #endif
+                    return false;
             }
             return true;
         }
 
-        private static Regex _parsePattern = new Regex(@"^(?<country>[a-zA-Z]{2})(?<checksum>\d{2})(?<bban>[a-zA-Z\d]{1,30})$");
+        private static readonly Regex _parsePattern = new Regex(@"^(?<country>[a-zA-Z]{2})(?<checksum>\d{2})(?<bban>[a-zA-Z\d]{1,30})$");
         public static Iban Parse(string iban)
         {
             if (string.IsNullOrEmpty(iban))

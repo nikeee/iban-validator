@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BbanValidator.cs" />
     <Compile Include="CharExtensions.cs" />
+    <Compile Include="CountryValidationData.cs" />
     <Compile Include="Iban.cs" />
     <Compile Include="IbanInformationProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
