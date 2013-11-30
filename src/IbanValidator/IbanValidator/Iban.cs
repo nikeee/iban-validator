@@ -255,7 +255,6 @@ namespace IbanValidator
             var sb = new StringBuilder(34);
             sb.Append(CountryCode);
             sb.Append(Checksum.ToString(CultureInfo.InvariantCulture).PadLeft(ChecksumLength, '0'));
-
             for (int i = 0; i < _bban.Length; ++i)
             {
                 if (i % 4 == 0)

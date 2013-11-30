@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator (4.5.1)", "Ib
 		{FD6EA84A-CB75-423E-8213-BC5FA3493BA8} = {FD6EA84A-CB75-423E-8213-BC5FA3493BA8}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IbanValidator.Demo", "IbanValidator.Demo\IbanValidator.Demo.csproj", "{5809E8BA-F592-4C2D-9A98-0A030D3BE1E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{5F7B483B-7EF1-44AF-B23C-2CDE399B0E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F7B483B-7EF1-44AF-B23C-2CDE399B0E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F7B483B-7EF1-44AF-B23C-2CDE399B0E0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5809E8BA-F592-4C2D-9A98-0A030D3BE1E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5809E8BA-F592-4C2D-9A98-0A030D3BE1E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5809E8BA-F592-4C2D-9A98-0A030D3BE1E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5809E8BA-F592-4C2D-9A98-0A030D3BE1E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
