@@ -30,7 +30,7 @@ namespace IbanValidator
                 if (!_isValid)
                     return false;
                 // If there is a bban validator available, we use it.
-                return _bbanValidator == null || _bbanValidator.Validate(_bban);
+                return _bbanValidator == null && _bbanValidator.Validate(_bban);
             }
         }
 
