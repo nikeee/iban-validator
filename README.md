@@ -1,7 +1,7 @@
 iban-validator
 ==============
 
-I small library used for iban and bban validation.
+A small library used for IBAN and BBAN validation.
 
 Example usage:
 ```C#
