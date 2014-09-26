@@ -76,6 +76,12 @@ namespace IbanValidator
             _bbanValidator = bbanValidator;
         }
 
+        public static bool ParseValidate(string value)
+        {
+            Iban iban;
+            return Iban.TryParse(value, out iban) && iban.IsValid;
+        }
+
         private const int ChecksumLength = 2;
         private bool ValidateNumber()
         {
@@ -213,7 +219,7 @@ namespace IbanValidator
         }
 
         #region Equality
-        
+
         public static bool operator ==(Iban a, Iban b)
         {
             if (ReferenceEquals(a, b))
