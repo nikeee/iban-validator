@@ -1,2 +1,4 @@
 language: csharp
 solution: ./src/IbanValidator/IbanValidator.sln
+script:
+  - xbuild /p:Configuration=Release /p:PostBuildEventUseInBuild=false /p:PreBuildEvent="" /p:PostBuildEvent="" ./src/IbanValidator/IbanValidator.sln
