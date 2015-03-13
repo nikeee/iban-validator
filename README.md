@@ -3,6 +3,8 @@ iban-validator
 
 A small library used for IBAN and BBAN validation.
 
+[![Build Status](https://travis-ci.org/nikeee/iban-validator.svg?branch=master)](https://travis-ci.org/nikeee/iban-validator)
+
 Example usage:
 ```C#
 var iban = new Iban("DE", 68, "210501700012345678");
