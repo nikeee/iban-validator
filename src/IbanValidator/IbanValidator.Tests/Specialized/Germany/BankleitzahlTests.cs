@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace IbanValidator.Specialized.Germany.Tests
 {
-    [TestClass()]
+    [TestFixture]
     public class BankleitzahlTests
     {
-        [TestMethod]
+        [Test]
         public void BankleitzahlTest()
         {
             var blz = new Bankleitzahl(64090100);
@@ -14,7 +14,7 @@ namespace IbanValidator.Specialized.Germany.Tests
             Assert.AreEqual(0100, blz.IndividualNumber);
         }
 
-        [TestMethod]
+        [Test]
         public void ParseTest()
         {
             var blz = Bankleitzahl.Parse("64090100");

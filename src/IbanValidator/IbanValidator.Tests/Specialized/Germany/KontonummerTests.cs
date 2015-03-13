@@ -1,18 +1,18 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace IbanValidator.Specialized.Germany.Tests
 {
-    [TestClass]
+    [TestFixture]
     public class KontonummerTests
     {
-        [TestMethod]
+        [Test]
         public void KontonummerTest()
         {
             var kto = new Kontonummer(123456789);
             Assert.AreEqual(123456789, kto.Value);
         }
 
-        [TestMethod]
+        [Test]
         public void ParseTest()
         {
             var kto = Kontonummer.Parse("123456789");

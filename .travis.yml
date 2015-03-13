@@ -1,4 +1,8 @@
 language: csharp
 solution: ./src/IbanValidator/IbanValidator.sln
+install:
+  - nuget restore ./src/IbanValidator/IbanValidator.sln
+  - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
-  - xbuild /p:Configuration=Release /p:PostBuildEventUseInBuild=false /p:PreBuildEvent="" /p:PostBuildEvent="" ./src/IbanValidator/IbanValidator.sln
+  - xbuild /p:Configuration=Release /p:PostBuildEventUseInBuild=false /p:PreBuildEvent="" /p:PostBuildEvent="" /p:TargetFrameworkProfile="" ./src/IbanValidator/IbanValidator.sln
+  - mono ./testrunner/NUnit.Runners.2.6.4/tools/nunit-console.exe ./src/IbanValidator/IbanValidator.Tests/bin/Release/IbanValidator.dll
