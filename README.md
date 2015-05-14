@@ -1,9 +1,7 @@
-iban-validator
+iban-validator [![Travis Build Status](https://travis-ci.org/nikeee/iban-validator.svg?branch=master)](https://travis-ci.org/nikeee/iban-validator) [![Windows Build Status](https://ci.appveyor.com/api/projects/status/c8rbuyuu7ack0xkh?svg=true)](https://ci.appveyor.com/project/nikeee/iban-validator)
 ==============
 
 A small library used for IBAN and BBAN validation.
-
-[![Build Status](https://travis-ci.org/nikeee/iban-validator.svg?branch=master)](https://travis-ci.org/nikeee/iban-validator)
 
 Example usage:
 ```C#
