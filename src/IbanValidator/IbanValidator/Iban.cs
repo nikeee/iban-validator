@@ -11,7 +11,7 @@ using System.Numerics;
 
 namespace IbanValidator
 {
-    public class Iban
+    public class Iban : IEquatable<Iban>
     {
         private readonly string _countryCode;
         public string CountryCode { get { return _countryCode; } }
@@ -241,11 +241,11 @@ namespace IbanValidator
             return base.Equals(obj) && this == iban;
         }
 
-        public bool Equals(Iban iban)
+        public bool Equals(Iban other)
         {
-            if ((object)iban == null)
+            if ((object)other == null)
                 return false;
-            return this == iban;
+            return this == other;
         }
 
         #endregion
