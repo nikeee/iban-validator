@@ -1,5 +1,6 @@
 language: csharp
 solution: ./src/IbanValidator/IbanValidator.sln
+sudo: false
 install:
   - nuget restore ./src/IbanValidator/IbanValidator.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
