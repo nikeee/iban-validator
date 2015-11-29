@@ -124,7 +124,7 @@ namespace IbanValidator
         {
             if (_validationDataList == null)
                 InitializeCountryData();
-            
+
             Debug.Assert(_validationDataList != null, "_validationDataList != null");
 
 #if NET20

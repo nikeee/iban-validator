@@ -4,11 +4,8 @@ namespace IbanValidator.Specialized.Germany
 {
     public class GermanyIbanInformationProvider : IbanInformationProvider
     {
-        private readonly Bankleitzahl _blz;
-        public Bankleitzahl Bankleitzahl { get { return _blz; } }
-
-        private readonly Kontonummer _kto;
-        public Kontonummer Kontonummer { get { return _kto; } }
+        public Bankleitzahl Bankleitzahl { get; }
+        public Kontonummer Kontonummer { get; }
 
         public GermanyIbanInformationProvider(Iban iban)
             : base(iban)
@@ -28,8 +25,8 @@ namespace IbanValidator.Specialized.Germany
             var blzStr = bbstr.Substring(0, blzLength);
             var ktoStr = bbstr.Substring(18 - ktoLength, ktoLength);
 
-            _blz = Bankleitzahl.Parse(blzStr);
-            _kto = Kontonummer.Parse(ktoStr);
+            Bankleitzahl = Bankleitzahl.Parse(blzStr);
+            Kontonummer = Kontonummer.Parse(ktoStr);
         }
     }
 }

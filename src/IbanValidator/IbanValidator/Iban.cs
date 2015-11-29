@@ -14,31 +14,11 @@ namespace IbanValidator
     public class Iban : IEquatable<Iban>
     {
         public string CountryCode { get; }
-
         public byte Checksum { get; }
-
         public string Bban { get; }
-
-        private readonly bool _isValid;
-        public virtual bool IsValid
-        {
-            get
-            {
-                if (!_isValid)
-                    return false;
-                // If there is a bban validator available, we use it.
-                return _bbanValidator == null || _bbanValidator.Validate(Bban);
-            }
-        }
-
-        private readonly BbanValidator _bbanValidator;
-        public BbanValidator BbanValidator { get { return _bbanValidator; } }
+        public bool IsValid { get; }
 
         public Iban(string countryCode, byte checksum, string bban)
-            : this(countryCode, checksum, bban, null)
-        { }
-
-        public Iban(string countryCode, byte checksum, string bban, BbanValidator bbanValidator)
         {
             if (string.IsNullOrEmpty(countryCode))
                 throw new ArgumentNullException(nameof(countryCode));
@@ -66,11 +46,9 @@ namespace IbanValidator
 
             Bban = bban;
 
-            _isValid = ValidateCountrySpecific();
-            if(_isValid)
-                _isValid = ValidateNumber();
-
-            _bbanValidator = bbanValidator;
+            IsValid = ValidateCountrySpecific();
+            if(IsValid)
+                IsValid = ValidateNumber();
         }
 
         private const int ChecksumLength = 2;
@@ -126,10 +104,7 @@ namespace IbanValidator
 #endif
         }
 
-        private bool ValidateCountrySpecific()
-        {
-            return CountryValidation.IsValidRest(CountryCode, Bban);
-        }
+        private bool ValidateCountrySpecific() => CountryValidation.IsValidRest(CountryCode, Bban);
 
         private static bool ValidateCountryCode(string countryCode)
         {
@@ -220,15 +195,9 @@ namespace IbanValidator
             return a.Checksum == b.Checksum && a.CountryCode == b.CountryCode && a.Bban == b.Bban;
         }
 
-        public static bool operator !=(Iban a, Iban b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(Iban a, Iban b) => !(a == b);
 
-        public override int GetHashCode()
-        {
-            return CountryCode.GetHashCode() ^ Checksum ^ Bban.GetHashCode();
-        }
+        public override int GetHashCode() => CountryCode.GetHashCode() ^ Checksum ^ Bban.GetHashCode();
 
         public override bool Equals(object obj)
         {
@@ -238,12 +207,7 @@ namespace IbanValidator
             return base.Equals(obj) && this == iban;
         }
 
-        public bool Equals(Iban other)
-        {
-            if ((object)other == null)
-                return false;
-            return this == other;
-        }
+        public bool Equals(Iban other) => (object)other == null && this == other;
 
         #endregion
 

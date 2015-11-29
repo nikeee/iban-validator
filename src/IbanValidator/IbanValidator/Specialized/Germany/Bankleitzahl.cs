@@ -3,11 +3,11 @@ namespace IbanValidator.Specialized.Germany
 {
     public class Bankleitzahl
     {
-        public short ClearingArea { get; private set; }
-        public Bankengruppe Bankengruppe { get; private set; }
-        public short IndividualNumber { get; private set; }
+        public short ClearingArea { get; }
+        public Bankengruppe Bankengruppe { get; }
+        public short IndividualNumber { get; }
 
-        public long Value { get; private set; }
+        public long Value { get; }
 
         public Bankleitzahl(long blz)
         {
@@ -17,9 +17,14 @@ namespace IbanValidator.Specialized.Germany
             IndividualNumber = (short)(blz % 1000);
         }
 
-        public static Bankleitzahl Parse(string blz)
+        public static Bankleitzahl Parse(string blz) => new Bankleitzahl(long.Parse(blz));
+        public static bool TryParse(string blz, out Bankleitzahl result)
         {
-            return new Bankleitzahl(long.Parse(blz));
+            result = null;
+            long parsedBlz;
+            if (long.TryParse(blz, out parsedBlz))
+                result = new Bankleitzahl(parsedBlz);
+            return result != null;
         }
     }
 }

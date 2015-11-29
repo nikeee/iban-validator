@@ -11,23 +11,14 @@ namespace IbanValidator
     internal static class CharExtensions
     {
 #if NET20
-        public static bool IsValidChar(char c)
+        public static bool IsValidChar(char c) => c >= 'A' && c <= 'Z';
 #else
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsValidChar(this char c) => c >= 'A' && c <= 'Z';
 #endif
-        public static bool IsValidChar(this char c)
-#endif
-        {
-            return c >= 'A' && c <= 'Z';
-        }
-        
+
 #if NET20
         public static int GetNumericValue(char c)
 #else
-#if NET45
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static int GetNumericValue(this char c)
 #endif
         {
