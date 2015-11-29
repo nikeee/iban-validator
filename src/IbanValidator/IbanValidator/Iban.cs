@@ -13,14 +13,11 @@ namespace IbanValidator
 {
     public class Iban : IEquatable<Iban>
     {
-        private readonly string _countryCode;
-        public string CountryCode { get { return _countryCode; } }
+        public string CountryCode { get; }
 
-        private readonly byte _checksum;
-        public byte Checksum { get { return _checksum; } }
+        public byte Checksum { get; }
 
-        private readonly string _bban;
-        public string Bban { get { return _bban; } }
+        public string Bban { get; }
 
         private readonly bool _isValid;
         public virtual bool IsValid
@@ -30,7 +27,7 @@ namespace IbanValidator
                 if (!_isValid)
                     return false;
                 // If there is a bban validator available, we use it.
-                return _bbanValidator == null || _bbanValidator.Validate(_bban);
+                return _bbanValidator == null || _bbanValidator.Validate(Bban);
             }
         }
 
@@ -44,20 +41,20 @@ namespace IbanValidator
         public Iban(string countryCode, byte checksum, string bban, BbanValidator bbanValidator)
         {
             if (string.IsNullOrEmpty(countryCode))
-                throw new ArgumentNullException("countryCode");
+                throw new ArgumentNullException(nameof(countryCode));
 
             countryCode = countryCode.ToUpperInvariant();
             if (!ValidateCountryCode(countryCode))
-                throw new ArgumentException("countryCode is not a valid ISO 3166-1 country code.");
+                throw new ArgumentException($"{nameof(countryCode)} is not a valid ISO 3166-1 country code.");
 
-            _countryCode = countryCode;
+            CountryCode = countryCode;
 
             if (checksum > 99)
-                throw new ArgumentException("Invalid checksum.");
-            _checksum = checksum;
+                throw new ArgumentException($"Invalid {nameof(checksum)}.");
+            Checksum = checksum;
 
             if (string.IsNullOrEmpty(bban))
-                throw new ArgumentNullException("bban");
+                throw new ArgumentNullException(nameof(bban));
 #if NET20
             bban = StringExtensions.StripWhiteSpace(bban);
 #else
@@ -67,7 +64,7 @@ namespace IbanValidator
             if (!ValidateBban(bban))
                 throw new ArgumentException("Invalid bban.");
 
-            _bban = bban;
+            Bban = bban;
 
             _isValid = ValidateCountrySpecific();
             if(_isValid)
@@ -82,7 +79,7 @@ namespace IbanValidator
             const int modValue = 97;
             const int modResult = 1;
 
-            var wholeString = string.Concat(_bban, _countryCode, _checksum.ToString(CultureInfo.InvariantCulture).PadLeft(ChecksumLength, '0'));
+            var wholeString = string.Concat(Bban, CountryCode, Checksum.ToString(CultureInfo.InvariantCulture).PadLeft(ChecksumLength, '0'));
 
             var sb = new StringBuilder();
             for (int i = 0; i < wholeString.Length; ++i)
@@ -131,7 +128,7 @@ namespace IbanValidator
 
         private bool ValidateCountrySpecific()
         {
-            return CountryValidation.IsValidRest(_countryCode, _bban);
+            return CountryValidation.IsValidRest(CountryCode, Bban);
         }
 
         private static bool ValidateCountryCode(string countryCode)
@@ -162,7 +159,7 @@ namespace IbanValidator
         public static Iban Parse(string iban)
         {
             if (string.IsNullOrEmpty(iban))
-                throw new ArgumentNullException("iban");
+                throw new ArgumentNullException(nameof(iban));
 #if NET20
             iban = StringExtensions.StripWhiteSpace(iban);
 #else
@@ -213,14 +210,14 @@ namespace IbanValidator
         }
 
         #region Equality
-        
+
         public static bool operator ==(Iban a, Iban b)
         {
             if (ReferenceEquals(a, b))
                 return true;
             if (((object)a == null) || ((object)b == null))
                 return false;
-            return a._checksum == b._checksum && a._countryCode == b._countryCode && a._bban == b._bban;
+            return a.Checksum == b.Checksum && a.CountryCode == b.CountryCode && a.Bban == b.Bban;
         }
 
         public static bool operator !=(Iban a, Iban b)
@@ -230,7 +227,7 @@ namespace IbanValidator
 
         public override int GetHashCode()
         {
-            return _countryCode.GetHashCode() ^ _checksum ^ _bban.GetHashCode();
+            return CountryCode.GetHashCode() ^ Checksum ^ Bban.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -255,11 +252,11 @@ namespace IbanValidator
             var sb = new StringBuilder(34);
             sb.Append(CountryCode);
             sb.Append(Checksum.ToString(CultureInfo.InvariantCulture).PadLeft(ChecksumLength, '0'));
-            for (int i = 0; i < _bban.Length; ++i)
+            for (int i = 0; i < Bban.Length; ++i)
             {
                 if (i % 4 == 0)
                     sb.Append(' ');
-                sb.Append(_bban[i]);
+                sb.Append(Bban[i]);
             }
             return sb.ToString();
         }
