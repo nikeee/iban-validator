@@ -24,6 +24,9 @@
 #Allow app.config file
 !app.config
 
+UpgradeLog.htm*
+Backup/
+
 
 # Include dlls if they're in the CommonReferences directory
 !*CommonReferences/*.dll
