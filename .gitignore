@@ -25,6 +25,7 @@ packages/
 
 UpgradeLog.htm*
 Backup/
+/build/
 
 
 # Include dlls if they're in the CommonReferences directory
