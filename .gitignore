@@ -15,6 +15,7 @@
 *.config
 *.js.map
 
+*.user
 *.pfx
 
 packages/
