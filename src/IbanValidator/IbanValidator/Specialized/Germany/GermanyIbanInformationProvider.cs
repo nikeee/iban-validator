@@ -11,7 +11,7 @@ namespace IbanValidator.Specialized.Germany
             : base(iban)
         {
             const int blzLength = 8;
-            const int ktoLength = 8;
+            const int ktoLength = 10;
 
             // DE00 2105 0170 0012 3456 78
             //      210 501 70 - 0012 3456 78
