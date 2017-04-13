@@ -16,30 +16,21 @@ namespace IbanValidator
 
     internal class CountryValidationData
     {
-        private readonly string _countryCode;
-        public string CountryCode { get { return _countryCode; } }
-
-        private readonly int _ibanLength;
-        public int IbanLength { get { return _ibanLength; } }
-
-        private readonly Regex _validationPattern;
-        public Regex ValidationPattern { get { return _validationPattern; } }
-
-        private readonly bool _isEu924;
-        public bool IsEu924 { get { return _isEu924; } }
-
-        private readonly string _sample;
-        public string Sample { get { return _sample; } }
+        public string CountryCode { get; }
+        public int IbanLength { get; }
+        public Regex ValidationPattern { get; }
+        public bool IsEu924 { get; }
+        public string Sample { get; }
 
         public CountryValidationData(string countryCode, int ibanLength, string validationPattern, bool isEu924, string sample)
         {
             if (countryCode == null || countryCode.Length != 2)
                 throw new ArgumentException("Invalid country code.");
-            _countryCode = countryCode;
-            _ibanLength = ibanLength;
-            _validationPattern = new Regex(validationPattern);
-            _isEu924 = isEu924;
-            _sample = sample;
+            CountryCode = countryCode;
+            IbanLength = ibanLength;
+            ValidationPattern = new Regex(validationPattern);
+            IsEu924 = isEu924;
+            Sample = sample;
         }
     }
 
@@ -49,9 +40,7 @@ namespace IbanValidator
 
         private static void InitializeCountryData()
         {
-            _validationDataList = new List<CountryValidationData>();
-            _validationDataList.AddRange(
-            new[] {
+            _validationDataList = new List<CountryValidationData>() {
                 new CountryValidationData("AD", 24, @"\d{8}[a-zA-Z0-9]{12}", false, "AD1200012030200359100100"),
                 new CountryValidationData("AL", 28, @"\d{8}[a-zA-Z0-9]{16}", false, "AL47212110090000000235698741"),
                 new CountryValidationData("AT", 20, @"\d{16}", true, "AT611904300234573201"),
@@ -100,8 +89,8 @@ namespace IbanValidator
                 new CountryValidationData("SK", 24, @"\d{20}", true, "SK3112000000198742637541"),
                 new CountryValidationData("SM", 27, @"[A-Z]\d{10}[a-zA-Z0-9]{12}", false, "SM86U0322509800000000270100"),
                 new CountryValidationData("TN", 24, @"\d{20}", false, "TN5914207207100707129648"),
-                new CountryValidationData("TR", 26, @"\d{5}[a-zA-Z0-9]{17}", false, "TR330006100519786457841326")
-            });
+                new CountryValidationData("TR", 26, @"\d{5}[a-zA-Z0-9]{17}", false, "TR330006100519786457841326"),
+            };
         }
 
         public static bool IsValidCountryCode(string cc)
@@ -110,8 +99,8 @@ namespace IbanValidator
                 InitializeCountryData();
             Debug.Assert(_validationDataList != null, "_validationDataList != null");
 #if NET20
-            for(int i = 0; i < _validationDataList.Count; ++i)
-                if(_validationDataList[i].CountryCode == cc)
+            for (int i = 0; i < _validationDataList.Count; ++i)
+                if (_validationDataList[i].CountryCode == cc)
                     return true;
             return false;
 #else
@@ -129,9 +118,9 @@ namespace IbanValidator
 
 #if NET20
             CountryValidationData validator = null;
-            for(int i = 0; i < _validationDataList.Count; ++i)
+            for (int i = 0; i < _validationDataList.Count; ++i)
             {
-                if(_validationDataList[i].CountryCode == countryCode)
+                if (_validationDataList[i].CountryCode == countryCode)
                 {
                     validator = _validationDataList[i];
                     break;
