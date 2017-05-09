@@ -7,7 +7,7 @@ namespace IbanValidator.Specialized.Germany
         public long Value { get; }
         public Kontonummer(long kto)
         {
-            if (kto > 9999999999 || kto < 10000000)
+            if (kto > 9999999999 || kto < 1)
                 throw new ArgumentException($"Invalid {nameof(kto)}");
             Value = kto;
         }
