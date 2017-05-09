@@ -2,7 +2,7 @@
 
 namespace IbanValidator.Specialized.Germany
 {
-    public class Kontonummer
+    public class Kontonummer : IEquatable<Kontonummer>
     {
         public long Value { get; }
         public Kontonummer(long kto)
@@ -16,10 +16,25 @@ namespace IbanValidator.Specialized.Germany
         public static bool TryParse(string blz, out Kontonummer result)
         {
             result = null;
-            long parsedKto;
-            if (long.TryParse(blz, out parsedKto))
+            if (long.TryParse(blz, out long parsedKto))
                 result = new Kontonummer(parsedKto);
             return result != null;
         }
+
+        public override int GetHashCode() => Value.GetHashCode();
+        public override bool Equals(object obj) => obj is Kontonummer kto ? Equals(kto) : false;
+        public bool Equals(Kontonummer other) => other.Value == Value;
+
+        public static bool operator ==(Kontonummer a, Kontonummer b)
+        {
+            if (ReferenceEquals(a, b))
+                return true;
+            if ((object)a == null)
+                return (object)b == null;
+            else if ((object)b == null)
+                return false;
+            return a.Value == b.Value;
+        }
+        public static bool operator !=(Kontonummer a, Kontonummer b) => !(a == b);
     }
 }

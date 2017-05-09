@@ -1,7 +1,9 @@
 ﻿
+using System;
+
 namespace IbanValidator.Specialized.Germany
 {
-    public class Bankleitzahl
+    public class Bankleitzahl : IEquatable<Bankleitzahl>
     {
         public short ClearingArea { get; }
         public Bankengruppe Bankengruppe { get; }
@@ -21,10 +23,17 @@ namespace IbanValidator.Specialized.Germany
         public static bool TryParse(string blz, out Bankleitzahl result)
         {
             result = null;
-            long parsedBlz;
-            if (long.TryParse(blz, out parsedBlz))
+            if (long.TryParse(blz, out long parsedBlz))
                 result = new Bankleitzahl(parsedBlz);
             return result != null;
+        }
+
+        public bool Equals(Bankleitzahl other)
+        {
+            return other.Bankengruppe == Bankengruppe
+                && other.ClearingArea == ClearingArea
+                && other.IndividualNumber == IndividualNumber
+                && other.Value == Value;
         }
     }
 }
