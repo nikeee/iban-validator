@@ -16,8 +16,7 @@ namespace IbanValidator.Specialized.Germany
         public static bool TryParse(string blz, out Kontonummer result)
         {
             result = null;
-            long parsedKto;
-            if (long.TryParse(blz, out parsedKto))
+            if (long.TryParse(blz, out long parsedKto))
                 result = new Kontonummer(parsedKto);
             return result != null;
         }
